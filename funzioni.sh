@@ -136,6 +136,32 @@ installa () {
   fi
 }
 
+
+installadeb () {
+
+# passare nome pacchetto e url da scaricare 
+    pacchetto="$1"
+    esiste=$(which $pacchetto)
+    urlpacchetto="$2"
+    if [ -z "$esiste" ]
+    then
+          echo "+++ Installo $pacchetto +++"
+            if test -f "pacchettodainstallare.deb"; then
+                rm pacchettodainstallare.deb
+            fi
+        
+        wget -O pacchettodainstallare.deb $urlpacchetto
+        sudo apt install ./pacchettodainstallare.deb -y
+        rm pacchettodainstallare.deb
+    else
+          echo "+++ $pacchetto lo ha già installato qualcuno scaricando $urlpacchetto +++"
+    fi
+
+}
+
+
+
+
 # la funzione verifica guarda se una cosa è già stata fatta
 # $1 è il comando e se $2 è "F" forzo l'esecuzione anche se gia fatto, se N è normale
 # leggo dal file di log
